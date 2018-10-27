@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.*?>
+<AnchorPane prefHeight="400.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.icmit.adkazankov.control.ContactFrameController">
+   <children>
+      <GridPane fx:id="gridPane" layoutX="86.0" layoutY="110.0" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+          <ColumnConstraints hgrow="SOMETIMES" />
+        </columnConstraints>
+      </GridPane>
+      <HBox layoutX="9.0" layoutY="355.0" spacing="5.0">
+         <children>
+            <Button layoutX="14.0" layoutY="355.0" mnemonicParsing="false" onAction="#saveAct" text="Save" />
+            <Button layoutX="71.0" layoutY="355.0" mnemonicParsing="false" onAction="#deleteAct" text="Delete Contact" />
+            <Button layoutX="190.0" layoutY="355.0" mnemonicParsing="false" onAction="#addPhoneAct" text="Add phone" />
+            <Button layoutX="284.0" layoutY="355.0" mnemonicParsing="false" onAction="#cancelAct" text="Cancel" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
