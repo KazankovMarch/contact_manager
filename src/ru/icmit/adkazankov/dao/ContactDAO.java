@@ -11,9 +11,6 @@ import java.util.LinkedList;
 public class ContactDAO extends GenericDAOImpl<Contact> {
 
     private static ContactDAO instance = new ContactDAO();
-    static {
-        instance.buffer = new LinkedList<Contact>();
-    }
 
     private ContactDAO(){}
 
@@ -41,7 +38,6 @@ public class ContactDAO extends GenericDAOImpl<Contact> {
             st.setBoolean(5, o.isInBlackList());
 
             st.execute();
-            updateOrAddToBuffer(o);
         } catch (SQLException e) {
             e.printStackTrace();
             o = null;
@@ -83,17 +79,11 @@ public class ContactDAO extends GenericDAOImpl<Contact> {
         try {
             Contact result = new Contact();
             result.setId(rs.getLong("id"));
-            if(buffer.contains(result)){
-                return getFromBuffer(result);
-            }
-            else {
-                result.setFullName(rs.getString("fullname"));
-                result.setLastName(rs.getString("lastname"));
-                result.setFirstName(rs.getString("firstname"));
-                result.setInBlackList(rs.getBoolean("inblacklist"));
-                updateOrAddToBuffer(result);
-                return result;
-            }
+            result.setFullName(rs.getString("fullname"));
+            result.setLastName(rs.getString("lastname"));
+            result.setFirstName(rs.getString("firstname"));
+            result.setInBlackList(rs.getBoolean("inblacklist"));
+            return result;
         }catch (SQLException e){
             System.err.println("can't parse Contact from ResultSet");
             e.printStackTrace();

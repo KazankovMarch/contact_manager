@@ -13,9 +13,6 @@ import java.util.LinkedList;
 public class PhoneDAO extends GenericDAOImpl<Phone> {
 
     private static PhoneDAO instance = new PhoneDAO();
-    static {
-        instance.buffer = new LinkedList<Phone>();
-    }
 
     private PhoneDAO(){}
 
@@ -55,7 +52,6 @@ public class PhoneDAO extends GenericDAOImpl<Phone> {
             st.setLong( 3, o.getPhoneType().getId());
             st.setString( 4, o.getPhoneNumber());
             st.execute();
-            updateOrAddToBuffer(o);
         } catch (SQLException e) {
             e.printStackTrace();
             o = null;
@@ -87,7 +83,6 @@ public class PhoneDAO extends GenericDAOImpl<Phone> {
             st.setString(3, o.getPhoneNumber());
             st.setLong(4, o.getId());
             st.executeUpdate();
-            updateOrAddToBuffer(o);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -98,20 +93,12 @@ public class PhoneDAO extends GenericDAOImpl<Phone> {
         try {
             Phone result = new Phone();
             result.setId(rs.getLong("id"));
-            if(buffer.contains(result)){
-                return getFromBuffer(result);
-            }
-            else {
-                PhoneType type = PhoneTypeDAO.getInstance().getByKey(rs.getLong("phonetype_id"));
-                PhoneTypeDAO.getInstance().updateOrAddToBuffer(type);
-                result.setPhoneType(type);
-                result.setPhoneNumber(rs.getString("phonenumber"));
-                Contact contact = ContactDAO.getInstance().getByKey(rs.getLong("contact_id"));
-                ContactDAO.getInstance().updateOrAddToBuffer(contact);
-                result.setContact(contact);
-                updateOrAddToBuffer(result);
-                return result;
-            }
+            PhoneType type = PhoneTypeDAO.getInstance().getByKey(rs.getLong("phonetype_id"));
+            result.setPhoneType(type);
+            result.setPhoneNumber(rs.getString("phonenumber"));
+            Contact contact = ContactDAO.getInstance().getByKey(rs.getLong("contact_id"));
+            result.setContact(contact);
+            return result;
         }catch (SQLException e){
             System.err.println("can't parse Phone from ResultSet");
             e.printStackTrace();

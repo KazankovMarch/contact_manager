@@ -29,12 +29,12 @@ public class MainFrameController implements Initializable {
         contactColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         resetList();
         contactTable.setOnMouseClicked(event -> {
+            if(event.getClickCount()==2) {
                 Contact selected = contactTable.getSelectionModel().getSelectedItem();
-                if(selected!=null) {
-                    String fullname = selected.getFullName();
+                if (selected != null) {
                     ContactFrameController.FinalClick click = Main.openContactFrame(selected);
                     if (click == ContactFrameController.FinalClick.save || click == ContactFrameController.FinalClick.delete) {
-                        if(click == ContactFrameController.FinalClick.delete){
+                        if (click == ContactFrameController.FinalClick.delete) {
                             selected.setFullName("");
                             list.remove(selected);
                             list.remove(contactTable.getSelectionModel().getSelectedIndex());
@@ -42,6 +42,7 @@ public class MainFrameController implements Initializable {
                         contactTable.refresh();
                     }
                 }
+            }
         });
     }
 
