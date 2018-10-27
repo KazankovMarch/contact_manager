@@ -14,7 +14,7 @@ import ru.icmit.adkazankov.domain.PhoneType;
 
 import java.util.List;
 
-public class PhoneFrameController {
+public class PhoneFrameController implements FrameClosable {
 
     @FXML
     private TextField numberField;
@@ -51,12 +51,12 @@ public class PhoneFrameController {
 
     private boolean isCorrectData() {
         if(typeBox.getSelectionModel().getSelectedItem()==null){
-            Main.showError("Не выбран тип телефона", "Пожалуйста, выберите тип из списка");
+            Main.showError("Phonetype is not selected", "Please, choose type from a list");
             return false;
         }
         String number = numberField.getText();
         if(!isParsable(number)){
-            Main.showError("Неверный формат номера", "Пожалуйста, используйте только цифры");
+            Main.showError("incorrect number format", "Please, use only digits");
             return false;
         }
         return true;
@@ -78,4 +78,9 @@ public class PhoneFrameController {
         return parsable;
     }
 
+    @Override
+    public void close() {
+        Stage stage = (Stage)numberField.getScene().getWindow();
+        stage.close();
+    }
 }

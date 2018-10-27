@@ -19,12 +19,12 @@ public class PhoneTypeDAO extends DictionaryTypeDAO<PhoneType> {
     }
 
     @Override
-    protected String getIdSeqName() {
-        return "phonetype_id";
+    public String getIdSeqName() {
+        return "phonetype_seq";
     }
 
     @Override
-    protected PhoneType createNewDTEntity() {
+    public PhoneType createNewDTEntity() {
         return new PhoneType();
     }
 

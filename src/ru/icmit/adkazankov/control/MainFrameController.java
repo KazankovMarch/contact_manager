@@ -8,14 +8,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import ru.icmit.adkazankov.Main;
 import ru.icmit.adkazankov.dao.ContactDAO;
+import ru.icmit.adkazankov.dao.DictionaryTypeDAO;
+import ru.icmit.adkazankov.dao.PhoneTypeDAO;
 import ru.icmit.adkazankov.domain.Contact;
+import ru.icmit.adkazankov.control.ContactFrameController.FinalClick;
+import ru.icmit.adkazankov.domain.DictionaryType;
+import ru.icmit.adkazankov.domain.PhoneType;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainFrameController implements Initializable {
+public class MainFrameController implements Initializable,FrameClosable {
 
     @FXML
     private TableColumn<Contact, String> contactColumn;
@@ -23,6 +29,13 @@ public class MainFrameController implements Initializable {
     @FXML
     private TableView<Contact> contactTable;
     private ObservableList<Contact> list;
+
+
+    @Override
+    public void close() {
+        Stage stage = (Stage) contactTable.getScene().getWindow();
+        stage.close();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -32,9 +45,9 @@ public class MainFrameController implements Initializable {
             if(event.getClickCount()==2) {
                 Contact selected = contactTable.getSelectionModel().getSelectedItem();
                 if (selected != null) {
-                    ContactFrameController.FinalClick click = Main.openContactFrame(selected);
-                    if (click == ContactFrameController.FinalClick.save || click == ContactFrameController.FinalClick.delete) {
-                        if (click == ContactFrameController.FinalClick.delete) {
+                    FinalClick click = Main.openContactFrame(selected);
+                    if (click == FinalClick.save || click == FinalClick.delete) {
+                        if (click == FinalClick.delete) {
                             selected.setFullName("");
                             list.remove(selected);
                             list.remove(contactTable.getSelectionModel().getSelectedIndex());
@@ -51,14 +64,24 @@ public class MainFrameController implements Initializable {
         list = FXCollections.observableArrayList(dao.getAll());
         contactTable.setItems(list);
     }
+
+    @FXML
+    private void showPhoneTypeAct(ActionEvent event) {
+        Main.openDictionary(PhoneTypeDAO.getInstance(), new DictionaryFrameController<PhoneType>());
+    }
+
     @FXML
     private void addAct(ActionEvent event) {
         Contact contact = new Contact();
         contact.setFullName("new Contact");
-        if(Main.openContactFrame(contact)== ContactFrameController.FinalClick.save){
+        if(Main.openContactFrame(contact)== FinalClick.save){
             list.add(contact);
             contactTable.refresh();
         }
     }
 
+    @FXML
+    private void showAboutAct(ActionEvent event) {
+        Main.showError("Sorry, not supported yet.", "Please, visit https://github.com/KazankovMarch/contact_manager");
+    }
 }

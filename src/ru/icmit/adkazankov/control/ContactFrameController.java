@@ -19,7 +19,13 @@ import ru.icmit.adkazankov.domain.PhoneType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactFrameController {
+public class ContactFrameController implements FrameClosable {
+
+    @Override
+    public void close() {
+        Stage thisStage = (Stage) gridPane.getScene().getWindow();
+        thisStage.close();
+    }
 
     public static enum FinalClick {
         save, delete, cancel;
@@ -82,13 +88,12 @@ public class ContactFrameController {
     @FXML
     void cancelAct(ActionEvent event) {
         click = FinalClick.cancel;
-        Stage thisStage = (Stage) gridPane.getScene().getWindow();
-        thisStage.close();
+        close();
     }
 
     @FXML
     void deleteAct(ActionEvent event) {
-        if(Main.showOK("Вы действительно хотите удалить этот контакт?", "Отменить это действие будет невозможно")){
+        if(Main.showOK("Are you sure you want to delete this contact?", "Cancel it will be impossible.")){
             click = FinalClick.delete;
             ContactDAO.getInstance().delete(contact);
             Stage thisStage = (Stage) gridPane.getScene().getWindow();

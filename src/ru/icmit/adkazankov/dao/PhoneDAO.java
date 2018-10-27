@@ -25,18 +25,29 @@ public class PhoneDAO extends GenericDAOImpl<Phone> {
 
     public  ArrayList<Phone> getByContact(Contact contact){
         String sql = "SELECT * FROM "+getTableName()+" WHERE contact_id = "+contact.getId();
+
+        return executeGetMany(sql);
+    }
+
+    public  ArrayList<Phone> getByPhoneType(PhoneType type){
+        String sql = "SELECT * FROM "+getTableName()+" WHERE phonetype = "+type.getId();
+        return executeGetMany(sql);
+    }
+
+    private ArrayList<Phone> executeGetMany(String sql) {
         try (PreparedStatement st = db.getConnection().prepareStatement(sql)){
             ArrayList<Phone> result = new ArrayList<>();
-           ResultSet resultSet = st.executeQuery();
-           while (resultSet.next()){
-               result.add(getObjectFromResultSet(resultSet));
-           }
-           return result;
+            ResultSet resultSet = st.executeQuery();
+            while (resultSet.next()){
+                result.add(getObjectFromResultSet(resultSet));
+            }
+            return result;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
+
 
     @Override
     public Phone create(Phone o) {

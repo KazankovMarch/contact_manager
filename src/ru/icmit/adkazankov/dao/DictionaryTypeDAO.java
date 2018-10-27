@@ -11,8 +11,6 @@ import java.util.LinkedList;
 public abstract class DictionaryTypeDAO<T extends DictionaryType> extends GenericDAOImpl<T> {
 
 
-
-
     @Override
     public T create(T o) {
         String sql =
@@ -37,7 +35,7 @@ public abstract class DictionaryTypeDAO<T extends DictionaryType> extends Generi
         return (T)o;
     }
 
-    protected abstract String getIdSeqName();
+    public abstract String getIdSeqName();
 
     public T getByName(String name){
         String sql = "SELECT * FROM dict_phonetype WHERE name = "+name;
@@ -99,6 +97,6 @@ public abstract class DictionaryTypeDAO<T extends DictionaryType> extends Generi
         return null;
     }
 
-    protected abstract T createNewDTEntity();
+    public abstract T createNewDTEntity();
 
 }

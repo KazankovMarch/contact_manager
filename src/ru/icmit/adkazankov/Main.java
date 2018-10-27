@@ -9,9 +9,13 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ru.icmit.adkazankov.control.ContactFrameController;
+import ru.icmit.adkazankov.control.DictionaryFrameController;
+import ru.icmit.adkazankov.dao.DictionaryTypeDAO;
+import ru.icmit.adkazankov.dao.PhoneTypeDAO;
 import ru.icmit.adkazankov.domain.Contact;
 import ru.icmit.adkazankov.domain.Phone;
 import ru.icmit.adkazankov.control.PhoneFrameController;
+import ru.icmit.adkazankov.domain.PhoneType;
 
 import java.io.IOException;
 
@@ -28,8 +32,7 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("view/PhoneFrame.fxml"));
 
-            Parent root = null;
-            root = loader.load();
+            Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("New phone");
             Scene scene = new Scene(root);
@@ -45,6 +48,26 @@ public class Main extends Application {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static void openDictionary(DictionaryTypeDAO dao, DictionaryFrameController controller) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/DictionaryFrame.fxml"));
+
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle(dao.getTableName());
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            Class c = PhoneType.class;
+            controller = loader.getController();
+            controller.setDictionary(dao);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -80,7 +103,7 @@ public class Main extends Application {
     }
     public static boolean showOK(String main, String context){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Подтверждение действия");
+        alert.setTitle("confirmation of action");
         alert.setHeaderText(main);
         alert.setContentText(context);
         alert.setResult(ButtonType.CANCEL);
@@ -90,7 +113,7 @@ public class Main extends Application {
     }
     public static void showError(String main, String context){
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Ошибка :(");
+        alert.setTitle("Error :(");
         alert.setHeaderText(main);
         alert.setContentText(context);
         alert.show();

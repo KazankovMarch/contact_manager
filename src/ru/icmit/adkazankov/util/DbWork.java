@@ -20,7 +20,6 @@ public class DbWork {
 
     public Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()){
-            System.out.println("CONNECTION RESET!111111");
             Properties p = getProperties();
             String host = p.getProperty("db_ip");
             String port = p.getProperty("db_port");
