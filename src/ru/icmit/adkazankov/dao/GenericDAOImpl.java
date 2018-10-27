@@ -14,27 +14,8 @@ public abstract class GenericDAOImpl<T extends Entity> implements GenericDAO<T> 
 
     protected DbWork db = DbWork.getInstance();
     protected GenericDAOImpl(){}
-    protected LinkedList<T> buffer;
 
     public abstract T getObjectFromResultSet(ResultSet rs);
-    void updateOrAddToBuffer(T o) {
-        if(buffer.contains(o)) {
-            buffer.remove(buffer.indexOf(o));
-            buffer.add(o);
-        }
-        else {
-            buffer.add(o);
-        }
-    }
-    protected T getFromBuffer(T o){
-        if(buffer.contains(o)) {
-            return buffer.get(buffer.indexOf(o));
-        }
-        else{
-            return null;
-        }
-    }
-
 
     @Override
     public abstract T create(T o);
@@ -44,7 +25,6 @@ public abstract class GenericDAOImpl<T extends Entity> implements GenericDAO<T> 
 
     @Override
     public void delete(T o){
-        buffer.remove(o);
         String sql = "DELETE FROM "+getTableName()+" WHERE ID = "+o.getId();
         try(Connection connection = db.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)){
             statement.executeUpdate();
@@ -65,9 +45,6 @@ public abstract class GenericDAOImpl<T extends Entity> implements GenericDAO<T> 
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        for(T o: result){
-            updateOrAddToBuffer(o);
         }
         return result;
     }
