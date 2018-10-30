@@ -11,9 +11,10 @@ CREATE TABLE contact
     CONSTRAINT contact_pkey PRIMARY KEY (id)
 );
 
+CREATE SEQUENCE phonetype_seq;
 CREATE TABLE dict_phonetype
 (
-    id bigint NOT NULL,
+    id bigint NOT NULL  DEFAULT nextval('phonetype_seq'),
     code character varying(255),
     name character varying(255),
     fullname character varying(255),

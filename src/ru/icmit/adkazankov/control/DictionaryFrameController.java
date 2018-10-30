@@ -14,13 +14,10 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 import ru.icmit.adkazankov.Main;
 import ru.icmit.adkazankov.dao.DictionaryTypeDAO;
-import ru.icmit.adkazankov.dao.PhoneDAO;
 import ru.icmit.adkazankov.domain.DictionaryType;
-import ru.icmit.adkazankov.util.DbWork;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class DictionaryFrameController<T extends DictionaryType> implements FrameClosable{
 
@@ -51,6 +48,7 @@ public class DictionaryFrameController<T extends DictionaryType> implements Fram
                 nullCount++;
             }
             else {
+                System.out.println("saveAct update "+o);
                 dao.update(o);
             }
         }

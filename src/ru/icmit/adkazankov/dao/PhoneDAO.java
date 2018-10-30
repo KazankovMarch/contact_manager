@@ -34,19 +34,7 @@ public class PhoneDAO extends GenericDAOImpl<Phone> {
         return executeGetMany(sql);
     }
 
-    private ArrayList<Phone> executeGetMany(String sql) {
-        try (PreparedStatement st = db.getConnection().prepareStatement(sql)){
-            ArrayList<Phone> result = new ArrayList<>();
-            ResultSet resultSet = st.executeQuery();
-            while (resultSet.next()){
-                result.add(getObjectFromResultSet(resultSet));
-            }
-            return result;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 
 
     @Override
@@ -72,7 +60,7 @@ public class PhoneDAO extends GenericDAOImpl<Phone> {
 
     @Override
     public void update(Phone o) {
-        if(o.getId()==null){
+        if(o.getId()==null || getByKey(o.getId())==null){
             create(o);
             return;
         }
@@ -115,6 +103,31 @@ public class PhoneDAO extends GenericDAOImpl<Phone> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Phone getObjectFromStringArray(String[] split) {
+        Phone phone = null;
+        if(split.length==getColumnCount()) {
+            phone = new Phone();
+            phone.setContact(ContactDAO.getInstance().getByKey(Long.parseLong(split[0])));
+            phone.setId(Long.parseLong(split[1]));
+            phone.setPhoneType(PhoneTypeDAO.getInstance().getByKey(Long.parseLong(split[2])));
+            phone.setPhoneNumber(split[3]);
+        }
+        else if(split.length==getColumnCount()-1){
+            phone = new Phone();
+            phone.setContact(ContactDAO.getInstance().getByKey(Long.parseLong(split[0])));
+            phone.setId(null);
+            phone.setPhoneType(PhoneTypeDAO.getInstance().getByKey(Long.parseLong(split[1])));
+            phone.setPhoneNumber(split[2]);
+        }
+        return phone;
+    }
+
+    @Override
+    protected int getColumnCount() {
+        return 4;
     }
 
     @Override

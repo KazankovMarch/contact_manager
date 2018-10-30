@@ -32,5 +32,6 @@
         </menus>
       </MenuBar>
       <Button layoutY="446.0" mnemonicParsing="false" onAction="#addAct" text="Add contact" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+      <Button layoutX="101.0" layoutY="446.0" mnemonicParsing="false" onAction="#importAct" text="Import " AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="101.0" />
    </children>
 </AnchorPane>

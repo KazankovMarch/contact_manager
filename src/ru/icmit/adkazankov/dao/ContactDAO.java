@@ -6,7 +6,6 @@ import ru.icmit.adkazankov.domain.Contact;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 
 public class ContactDAO extends GenericDAOImpl<Contact> {
 
@@ -49,24 +48,30 @@ public class ContactDAO extends GenericDAOImpl<Contact> {
     @Override
     public void update(Contact o) {
         String sql = "update "+getTableName()+" set fullname = ?, lastname = ?, firstname = ?, inblacklist = ? where id = "+o.getId();
-
-        if(o.getId()==null){
+        if(o.getId()==null || getByKey(o.getId())==null){
             create(o);
             return;
         }
 
         try (PreparedStatement st = db.getConnection().prepareStatement(sql)){
 
+
             st.setString(1, o.getFullName());
             st.setString( 2, o.getLastName());
             st.setString( 3, o.getFirstName());
             st.setBoolean(4, o.isInBlackList());
+            System.out.println(st.toString());
 
             st.execute();
         } catch (SQLException e) {
             e.printStackTrace();
             o = null;
         }
+    }
+
+    @Override
+    protected int getColumnCount() {
+        return 5;
     }
 
     @Override
@@ -89,5 +94,27 @@ public class ContactDAO extends GenericDAOImpl<Contact> {
             e.printStackTrace();
         }
         return null;
+    }
+    @Override
+    public Contact getObjectFromStringArray(String[] split) {
+        Contact contact = null;
+        if(split.length==getColumnCount()) {
+            contact = new Contact();
+            contact.setId(Long.parseLong(split[0]));
+            contact.setFullName(split[1]);
+            contact.setLastName(split[2]);
+            contact.setFirstName(split[3]);
+            contact.setInBlackList(Boolean.parseBoolean(split[4]));
+        }
+        else {
+            contact = new Contact();
+            contact.setId(null);
+            contact.setFullName(split[0]);
+            contact.setLastName(split[1]);
+            contact.setFirstName(split[2]);
+            contact.setInBlackList(Boolean.parseBoolean(split[3]));
+        }
+        System.out.println(contact);
+        return contact;
     }
 }

@@ -10,7 +10,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ru.icmit.adkazankov.control.ContactFrameController;
 import ru.icmit.adkazankov.control.DictionaryFrameController;
+import ru.icmit.adkazankov.control.ImportFrameController;
+import ru.icmit.adkazankov.dao.ContactDAO;
 import ru.icmit.adkazankov.dao.DictionaryTypeDAO;
+import ru.icmit.adkazankov.dao.PhoneDAO;
 import ru.icmit.adkazankov.dao.PhoneTypeDAO;
 import ru.icmit.adkazankov.domain.Contact;
 import ru.icmit.adkazankov.domain.Phone;
@@ -24,6 +27,13 @@ public class Main extends Application {
     private String mainFrameString = "view/MainFrame.fxml";
 
     public static void main(String[] args) {
+        System.out.println("==========================================================");
+        System.out.println(ContactDAO.getInstance().getAll());
+        System.out.println("==========================================================");
+        System.out.println(PhoneDAO.getInstance().getAll());
+        System.out.println("==========================================================");
+        System.out.println(PhoneTypeDAO.getInstance().getAll());
+        System.out.println("==========================================================");
         launch(args);
     }
 
@@ -68,6 +78,27 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static int openImportFrame(ContactDAO dao) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/ImportFrame.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Import to "+dao.getTableName());
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            Class c = PhoneType.class;
+            ImportFrameController controller = loader.getController();
+            controller.setDao(dao);
+            stage.showAndWait();
+            return controller.getUpdateCount();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     @Override

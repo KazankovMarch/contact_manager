@@ -80,6 +80,15 @@ public class MainFrameController implements Initializable,FrameClosable {
         }
     }
 
+
+    @FXML
+    void importAct(ActionEvent event) {
+        if(Main.openImportFrame(ContactDAO.getInstance()) > 0){
+            resetList();
+            contactTable.refresh();
+        }
+    }
+
     @FXML
     private void showAboutAct(ActionEvent event) {
         Main.showError("Sorry, not supported yet.", "Please, visit https://github.com/KazankovMarch/contact_manager");

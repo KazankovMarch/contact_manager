@@ -1,6 +1,6 @@
 # Compiled class file
 *.class
-
+out/
 # Log file
 *.log
 
@@ -24,3 +24,6 @@ hs_err_pid*
 
 #idea files
 .idea/
+
+#my db properties
+dad.properties
