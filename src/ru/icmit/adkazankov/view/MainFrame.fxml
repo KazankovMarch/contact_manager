@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="475.0" prefWidth="385.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.icmit.adkazankov.control.MainFrameController">
+<AnchorPane prefHeight="475.0" prefWidth="385.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.icmit.adkazankov.control.MainFrameController">
    <children>
       <TableView fx:id="contactTable" layoutX="81.0" layoutY="34.0" prefHeight="436.0" prefWidth="385.0" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columns>
@@ -19,6 +20,13 @@
       </TableView>
       <MenuBar layoutX="188.0" layoutY="446.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <menus>
+            <Menu mnemonicParsing="false" text="Import">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#importAct" text="Contacts" />
+                  <MenuItem mnemonicParsing="false" onAction="#importAct" text="Phones" />
+                  <MenuItem mnemonicParsing="false" onAction="#importAct" text="Phone types" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Show dictionary">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#showPhoneTypeAct" text="PhoneType" />
@@ -31,7 +39,6 @@
           </Menu>
         </menus>
       </MenuBar>
-      <Button layoutY="446.0" mnemonicParsing="false" onAction="#addAct" text="Add contact" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
-      <Button layoutX="101.0" layoutY="446.0" mnemonicParsing="false" onAction="#importAct" text="Import " AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="101.0" />
+      <Button layoutY="446.0" mnemonicParsing="false" onAction="#addAct" prefHeight="29.0" prefWidth="108.0" text="Add contact" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
    </children>
 </AnchorPane>

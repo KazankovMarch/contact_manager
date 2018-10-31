@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ImportFrameController implements FrameClosable {
+public class ImportFrameController {
 
     @FXML
     private TextField separatorField;
@@ -54,7 +54,6 @@ public class ImportFrameController implements FrameClosable {
         close();
     }
 
-    @Override
     public void close() {
         Stage stage = (Stage) separatorField.getScene().getWindow();
         stage.close();

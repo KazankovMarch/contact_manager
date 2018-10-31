@@ -108,19 +108,14 @@ public class PhoneDAO extends GenericDAOImpl<Phone> {
     @Override
     public Phone getObjectFromStringArray(String[] split) {
         Phone phone = null;
-        if(split.length==getColumnCount()) {
+        try {
             phone = new Phone();
             phone.setContact(ContactDAO.getInstance().getByKey(Long.parseLong(split[0])));
             phone.setId(Long.parseLong(split[1]));
             phone.setPhoneType(PhoneTypeDAO.getInstance().getByKey(Long.parseLong(split[2])));
             phone.setPhoneNumber(split[3]);
-        }
-        else if(split.length==getColumnCount()-1){
-            phone = new Phone();
-            phone.setContact(ContactDAO.getInstance().getByKey(Long.parseLong(split[0])));
-            phone.setId(null);
-            phone.setPhoneType(PhoneTypeDAO.getInstance().getByKey(Long.parseLong(split[1])));
-            phone.setPhoneNumber(split[2]);
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return phone;
     }

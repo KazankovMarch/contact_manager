@@ -11,10 +11,7 @@ import javafx.stage.Stage;
 import ru.icmit.adkazankov.control.ContactFrameController;
 import ru.icmit.adkazankov.control.DictionaryFrameController;
 import ru.icmit.adkazankov.control.ImportFrameController;
-import ru.icmit.adkazankov.dao.ContactDAO;
-import ru.icmit.adkazankov.dao.DictionaryTypeDAO;
-import ru.icmit.adkazankov.dao.PhoneDAO;
-import ru.icmit.adkazankov.dao.PhoneTypeDAO;
+import ru.icmit.adkazankov.dao.*;
 import ru.icmit.adkazankov.domain.Contact;
 import ru.icmit.adkazankov.domain.Phone;
 import ru.icmit.adkazankov.control.PhoneFrameController;
@@ -80,7 +77,7 @@ public class Main extends Application {
         }
     }
 
-    public static int openImportFrame(ContactDAO dao) {
+    public static int openImportFrame(GenericDAOImpl dao) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("view/ImportFrame.fxml"));

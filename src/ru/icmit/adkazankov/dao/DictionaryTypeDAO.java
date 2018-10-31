@@ -107,19 +107,14 @@ public abstract class DictionaryTypeDAO<T extends DictionaryType> extends Generi
     @Override
     public T getObjectFromStringArray(String[] split) {
         T type = null;
-        if(split.length==getColumnCount()) {
+        try {
             type = createNewDTEntity();
             type.setId(Long.parseLong(split[0]));
             type.setCode(split[1]);
             type.setName(split[2]);
             type.setFullName(split[3]);
-        }
-        else if(split.length==getColumnCount()-1){
-            type = createNewDTEntity();
-            type.setId(null);
-            type.setCode(split[0]);
-            type.setName(split[1]);
-            type.setFullName(split[2]);
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return type;
     }

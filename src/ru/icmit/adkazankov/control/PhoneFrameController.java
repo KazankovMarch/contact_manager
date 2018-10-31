@@ -14,7 +14,7 @@ import ru.icmit.adkazankov.domain.PhoneType;
 
 import java.util.List;
 
-public class PhoneFrameController implements FrameClosable {
+public class PhoneFrameController {
 
     @FXML
     private TextField numberField;
@@ -78,7 +78,6 @@ public class PhoneFrameController implements FrameClosable {
         return parsable;
     }
 
-    @Override
     public void close() {
         Stage stage = (Stage)numberField.getScene().getWindow();
         stage.close();

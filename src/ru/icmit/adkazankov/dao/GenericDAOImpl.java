@@ -49,8 +49,8 @@ public abstract class GenericDAOImpl<T extends Entity> implements GenericDAO<T> 
         ResultSet resultSet = null;
         try(Connection connection = db.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)){
             resultSet = statement.executeQuery();
-            resultSet.next();
-            return getObjectFromResultSet(resultSet);
+            if(resultSet.next())
+                return getObjectFromResultSet(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -63,6 +63,7 @@ public abstract class GenericDAOImpl<T extends Entity> implements GenericDAO<T> 
         int count = 0;
         while((s = reader.readLine()) != null){
             String[] split = s.split(separator);
+            System.out.println(Arrays.toString(split));
             update(getObjectFromStringArray(split));
             count++;
         }

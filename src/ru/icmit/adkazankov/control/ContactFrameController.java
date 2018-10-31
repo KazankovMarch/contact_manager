@@ -19,9 +19,8 @@ import ru.icmit.adkazankov.domain.PhoneType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactFrameController implements FrameClosable {
+public class ContactFrameController {
 
-    @Override
     public void close() {
         Stage thisStage = (Stage) gridPane.getScene().getWindow();
         thisStage.close();

@@ -19,7 +19,7 @@ import ru.icmit.adkazankov.domain.DictionaryType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DictionaryFrameController<T extends DictionaryType> implements FrameClosable{
+public class DictionaryFrameController<T extends DictionaryType> {
 
     private DictionaryTypeDAO<T> dao;
     private ObservableList<T> list;
@@ -138,7 +138,6 @@ public class DictionaryFrameController<T extends DictionaryType> implements Fram
         table.setItems(list);
     }
 
-    @Override
     public void close() {
         Stage thisStage = (Stage) table.getScene().getWindow();
         thisStage.close();

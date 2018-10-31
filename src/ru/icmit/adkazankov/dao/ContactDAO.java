@@ -98,7 +98,7 @@ public class ContactDAO extends GenericDAOImpl<Contact> {
     @Override
     public Contact getObjectFromStringArray(String[] split) {
         Contact contact = null;
-        if(split.length==getColumnCount()) {
+        try {
             contact = new Contact();
             contact.setId(Long.parseLong(split[0]));
             contact.setFullName(split[1]);
@@ -106,15 +106,9 @@ public class ContactDAO extends GenericDAOImpl<Contact> {
             contact.setFirstName(split[3]);
             contact.setInBlackList(Boolean.parseBoolean(split[4]));
         }
-        else {
-            contact = new Contact();
-            contact.setId(null);
-            contact.setFullName(split[0]);
-            contact.setLastName(split[1]);
-            contact.setFirstName(split[2]);
-            contact.setInBlackList(Boolean.parseBoolean(split[3]));
+        catch (Exception ex){
+            ex.printStackTrace();
         }
-        System.out.println(contact);
         return contact;
     }
 }
